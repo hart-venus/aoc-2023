@@ -5,7 +5,49 @@ fn main() {
 } 
 
 fn part1(input: &str, r:u64, g:u64, b:u64) -> String {
-    "8".to_string()
+    let mut running_sum:u64 = 0;
+    let mut game_id = 1;
+    let mut color_hash = std::collections::HashMap::new();
+    color_hash.insert("red", r);
+    color_hash.insert("green", g);
+    color_hash.insert("blue", b);
+
+    println!("r: {}, g: {}, b: {}", r, g, b);
+    for line in input.lines() {
+        // Get line slice after ":"
+        let line = line.split(":").collect::<Vec<&str>>()[1];
+        // Get semicolon separated list of cube_sets
+        let cube_sets = line.split(";").collect::<Vec<&str>>();
+        let mut valid = true;
+        for cube_set in cube_sets {
+            let colors = cube_set.split(",").collect::<Vec<&str>>();
+            // create a dict of color: number of cubes ("3 blue" -> "blue": 3)
+            let mut color_dict = std::collections::HashMap::new();
+            for color in colors {
+                let color = color.trim();
+                let color = color.split(" ").collect::<Vec<&str>>();
+                color_dict.insert(color[1], color[0]);
+            }
+            // if any entry in color_dict is greater than in color_hash
+            // then this game is invalid
+            for (color, count) in color_dict {
+                if color_hash.get(color).unwrap() < &count.parse::<u64>().unwrap() {
+                    valid = false;
+                    break;
+                }
+            }
+            if !valid {
+                break;
+            }
+        } 
+        if valid {
+            running_sum += game_id;
+        }
+
+        // finally, increase the game id. 
+        game_id += 1;
+    }
+    running_sum.to_string()
 }
 
 #[cfg(test)]
