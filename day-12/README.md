@@ -12,3 +12,8 @@
 
 ## Thoughts 🤔
 This one was maybe the hardest yet, partially because I didn't have a good enough yet understanding of some essential concepts about the problem. Nevertheless my classic part 1 bruteforce worked but fell through, and for the second part i sought help from reddit and adapted a Python solution that I found smart and elegant. I'm not sure I would have been able to come up with it myself, but I'm glad I got to learn about memoization and how to implement objects in Rust.
+
+## References 📚
+- [std::collections::HashMap::entry()](https://doc.rust-lang.org/std/collections/hash_map/enum.Entry.html)
+- [std::iter::Iterator::extend()](https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.extend)
+- [std::String::push_str()](https://doc.rust-lang.org/std/string/struct.String.html#method.push_str)
