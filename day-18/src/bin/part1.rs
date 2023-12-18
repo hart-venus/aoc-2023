@@ -7,10 +7,63 @@ fn main() {
 
 fn part1(input: &str) -> String {
     let input = input.trim();
-    let mut running_sum: i32 = 0;
 
 
-    running_sum.to_string()
+    let arr_dim = 2000;
+    // make a 100x100 matrix of '.'
+    let mut matrix = vec![vec!['.'; arr_dim]; arr_dim];
+
+    let mut curr_i = arr_dim/2;
+    let mut curr_j = arr_dim/2;
+    matrix[curr_i][curr_j] = '#';
+
+    for line in input.lines() {
+        let words: Vec<&str> = line.split_whitespace().collect();
+        let dir = words[0];
+        let dist: i32 = words[1].parse().unwrap();
+
+        for _ in 0..dist {
+            match dir {
+                "R" => curr_j += 1,
+                "L" => curr_j -= 1,
+                "U" => curr_i -= 1,
+                "D" => curr_i += 1,
+                _ => panic!("unknown direction"),
+            }
+            matrix[curr_i][curr_j] = '#';
+            
+        }
+
+    }
+
+    let mut w_count = 0;
+    // now we use flood fill to fill in the rest of the matrix with #'s
+    let mut queue = vec![(0, 0)];
+    while !queue.is_empty() {
+        let (i, j) = queue.pop().unwrap();
+        if i > 0 && matrix[i-1][j] == '.' {
+            matrix[i-1][j] = 'w';
+            w_count += 1;
+            queue.push((i-1, j));
+        }
+        if i < arr_dim-1 && matrix[i+1][j] == '.' {
+            matrix[i+1][j] = 'w';
+            w_count += 1;
+            queue.push((i+1, j));
+        }
+        if j > 0 && matrix[i][j-1] == '.' {
+            matrix[i][j-1] = 'w';
+            w_count += 1;
+            queue.push((i, j-1));
+        }
+        if j < arr_dim-1 && matrix[i][j+1] == '.' {
+            matrix[i][j+1] = 'w';
+            w_count += 1;
+            queue.push((i, j+1));
+        }
+    }    
+
+    (arr_dim.pow(2) - w_count).to_string()
 }
 
 #[cfg(test)]
