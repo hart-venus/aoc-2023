@@ -26,5 +26,6 @@ Complete all the challenges before Christmas! 🌟
 ## Progress 📈
 
 - [X] Day 1 through 16, both parts 🎉
+- [X] Day 18, both parts 🎉
 
 Feel free to explore and reach out if you have any suggestions or want to pair up on solving some of these puzzles. Happy coding and happy holidays! 🎁
